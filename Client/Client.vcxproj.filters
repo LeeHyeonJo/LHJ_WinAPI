@@ -23,6 +23,9 @@
     <Filter Include="Game\04. Object">
       <UniqueIdentifier>{55254366-030e-4128-a6e5-4705624e7bcf}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Game\05. Level">
+      <UniqueIdentifier>{c076c3be-aa6c-4f53-8d94-0b3c2a878477}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Client.h">
@@ -39,6 +42,15 @@
     </ClInclude>
     <ClInclude Include="CEngine.h">
       <Filter>Game\02. Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="define.h">
+      <Filter>Game\01. Header</Filter>
+    </ClInclude>
+    <ClInclude Include="global.h">
+      <Filter>Game\01. Header</Filter>
+    </ClInclude>
+    <ClInclude Include="pch.h">
+      <Filter>Default</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -60,6 +72,9 @@
     </ClCompile>
     <ClCompile Include="CEngine.cpp">
       <Filter>Game\02. Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="pch.cpp">
+      <Filter>Default</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

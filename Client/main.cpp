@@ -1,6 +1,4 @@
-﻿// Client.cpp : 애플리케이션에 대한 진입점을 정의합니다.
-// 
-
+﻿#include "pch.h"
 #include "framework.h"
 #include "Client.h"
 
@@ -9,7 +7,7 @@
 
 
 // 전역 변수:
-HINSTANCE   hInst = 0;             // 이건 register쪽 변수. 윈도의 재료 
+HINSTANCE   hInst = 0;             // 이건 register쪽 변수. 윈도우의 재료 
 HWND        main_hWnd = nullptr;  // 전역변수로 저장한 메인 윈도우의 핸들(↑ 써서 만듦) 
                             //(HWND는 정수타입의 ID이나 핸들은 nullptr로도 초기화 가능) 
 
@@ -25,30 +23,6 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
                      _In_ LPWSTR    lpCmdLine,
                      _In_ int       nCmdShow)
 {
-    // 싱글톤으로 구현한 엔진, 여기서 직접 사용해보기 // 
-    // static 함수를 외부에서 사용하므로, 클래스 이름을 붙임 
-    CEngine* pEngine = CEngine::Getinst(); // 인스터스를 생성 후 할당 
-    pEngine = CEngine::Getinst(); // 이미 생성된 인스턴스를 반환
-    pEngine = CEngine::Getinst(); // 이미 생성된 인스턴스를 반환
-    pEngine = CEngine::Getinst(); // 이미 생성된 인스턴스를 반환
-    pEngine = CEngine::Getinst(); // 이미 생성된 인스턴스를 반환
-    pEngine = CEngine::Getinst(); // 이미 생성된 인스턴스를 반환
-
-    // 인스턴스 삭제 
-    CEngine::Destroy(); 
-
-    // 인스턴스 재할당 
-    CEngine* test = CEngine::Getinst(); // 인스턴스 생성 후 주소를 반환해서 test에 저장. 
-
-    // 이미 재할당된 인스턴스를 반환
-    test = CEngine::Getinst(); // 생성된 인스턴스 반환
-    test = CEngine::Getinst(); // 생성된 인스턴스 반환
-    test = CEngine::Getinst(); // 생성된 인스턴스 반환
-    test = CEngine::Getinst(); // 생성된 인스턴스 반환
-
-    CEngine::Destroy(); 
-
-
     MyRegisterClass(hInstance);
 
     // 애플리케이션 초기화를 수행합니다:
@@ -56,6 +30,12 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     {
         return FALSE;
     }
+
+    // ★엔진 초기화 == 원하는 값으로 엔진 설정// 
+    // main_hWnd 는 제일 위에서 nullptr로 초기화해둠. 
+    // 해상도가 선명한 WINDOW를 띄우는게 목적임. 
+    CEngine::GetInst()->init(main_hWnd, POINT{ 1280, 768 });
+
 
     // 단축키 테이블 참조: 단축키가 눌렸는지 확인하는 작업 
     HACCEL hAccelTable = LoadAccelerators(hInstance, MAKEINTRESOURCE(IDC_CLIENT));
