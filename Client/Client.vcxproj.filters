@@ -26,6 +26,9 @@
     <Filter Include="Game\05. Level">
       <UniqueIdentifier>{c076c3be-aa6c-4f53-8d94-0b3c2a878477}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Game\04. Object\Player">
+      <UniqueIdentifier>{2c948e3f-8579-4c3c-9006-c7468f16d6dd}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Client.h">
@@ -52,6 +55,9 @@
     <ClInclude Include="pch.h">
       <Filter>Default</Filter>
     </ClInclude>
+    <ClInclude Include="CObj.h">
+      <Filter>Game\04. Object\Player</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Client.rc">
@@ -75,6 +81,9 @@
     </ClCompile>
     <ClCompile Include="pch.cpp">
       <Filter>Default</Filter>
+    </ClCompile>
+    <ClCompile Include="CObj.cpp">
+      <Filter>Game\04. Object\Player</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

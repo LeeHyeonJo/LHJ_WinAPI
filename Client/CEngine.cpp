@@ -14,7 +14,7 @@ CEngine::~CEngine()
 	// DC 해제 이건 포인터이기 때문 
 	ReleaseDC(m_hWnd, m_dc); 
 
-	// 레벨 해제는 이따가 
+	// 레벨 해제는 이따가 (소멸자니까0
 }
 
 void CEngine::init(HWND _hWnd, POINT _ptResolution)
@@ -37,4 +37,5 @@ void CEngine::init(HWND _hWnd, POINT _ptResolution)
 
 void CEngine::tick() 
 {
+	// 레벨에서 틱. 렌더 돌리라고 명령~
 }
