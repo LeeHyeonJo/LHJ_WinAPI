@@ -8,6 +8,21 @@
     <Filter Include="Default">
       <UniqueIdentifier>{b19e04ea-cc13-49b4-9028-d5c074b2102b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Game">
+      <UniqueIdentifier>{89929809-fdd6-434f-b998-115ab02bba38}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\01. Header">
+      <UniqueIdentifier>{2edbcbb2-1f05-487a-a024-7173a039e578}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\02. Engine">
+      <UniqueIdentifier>{db316079-c72b-4ab6-9882-f1d05ec2ce8f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\03. Manager">
+      <UniqueIdentifier>{6485a4dd-848c-4ca9-ab03-7745a842b6d4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\04. Object">
+      <UniqueIdentifier>{55254366-030e-4128-a6e5-4705624e7bcf}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Client.h">
@@ -21,6 +36,9 @@
     </ClInclude>
     <ClInclude Include="targetver.h">
       <Filter>Default</Filter>
+    </ClInclude>
+    <ClInclude Include="CEngine.h">
+      <Filter>Game\02. Engine</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -39,6 +57,9 @@
   <ItemGroup>
     <ClCompile Include="main.cpp">
       <Filter>Default</Filter>
+    </ClCompile>
+    <ClCompile Include="CEngine.cpp">
+      <Filter>Game\02. Engine</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

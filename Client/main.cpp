@@ -1,19 +1,23 @@
 ﻿// Client.cpp : 애플리케이션에 대한 진입점을 정의합니다.
-//
+// 
 
 #include "framework.h"
 #include "Client.h"
 
+// 클래스를 추가했고, 이건 main에서도 사용하므로 여기에 헤더 인클루드
+#include "CEngine.h" 
+
 
 // 전역 변수:
-HINSTANCE hInst;                                // 현재 인스턴스입니다.
-WCHAR szTitle[100];                  // 제목 표시줄 텍스트입니다.
-WCHAR szWindowClass[100];            // 기본 창 클래스 이름입니다.
+HINSTANCE   hInst = 0;             // 이건 register쪽 변수. 윈도의 재료 
+HWND        main_hWnd = nullptr;  // 전역변수로 저장한 메인 윈도우의 핸들(↑ 써서 만듦) 
+                            //(HWND는 정수타입의 ID이나 핸들은 nullptr로도 초기화 가능) 
+
 
 // 이 코드 모듈에 포함된 함수의 선언을 전달합니다:
 ATOM                MyRegisterClass(HINSTANCE hInstance);
 BOOL                InitInstance(HINSTANCE, int);
-LRESULT CALLBACK    WndProc(HWND, UINT, WPARAM, LPARAM);
+LRESULT CALLBACK    WndProc(HWND, UINT, WPARAM, LPARAM); // 윈도우핸들(ID), 메세지 내용.. 발생한 메세지의 케이스에 따라 switch문이 돌면서 메세지를 처리한다. 
 INT_PTR CALLBACK    About(HWND, UINT, WPARAM, LPARAM);
 
 int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
@@ -21,14 +25,30 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
                      _In_ LPWSTR    lpCmdLine,
                      _In_ int       nCmdShow)
 {
-    UNREFERENCED_PARAMETER(hPrevInstance);
-    UNREFERENCED_PARAMETER(lpCmdLine);
+    // 싱글톤으로 구현한 엔진, 여기서 직접 사용해보기 // 
+    // static 함수를 외부에서 사용하므로, 클래스 이름을 붙임 
+    CEngine* pEngine = CEngine::Getinst(); // 인스터스를 생성 후 할당 
+    pEngine = CEngine::Getinst(); // 이미 생성된 인스턴스를 반환
+    pEngine = CEngine::Getinst(); // 이미 생성된 인스턴스를 반환
+    pEngine = CEngine::Getinst(); // 이미 생성된 인스턴스를 반환
+    pEngine = CEngine::Getinst(); // 이미 생성된 인스턴스를 반환
+    pEngine = CEngine::Getinst(); // 이미 생성된 인스턴스를 반환
 
-    // TODO: 여기에 코드를 입력합니다.
+    // 인스턴스 삭제 
+    CEngine::Destroy(); 
 
-    // 전역 문자열을 초기화합니다.
-    LoadStringW(hInstance, IDS_APP_TITLE, szTitle, 100);
-    LoadStringW(hInstance, IDC_CLIENT, szWindowClass, 100);
+    // 인스턴스 재할당 
+    CEngine* test = CEngine::Getinst(); // 인스턴스 생성 후 주소를 반환해서 test에 저장. 
+
+    // 이미 재할당된 인스턴스를 반환
+    test = CEngine::Getinst(); // 생성된 인스턴스 반환
+    test = CEngine::Getinst(); // 생성된 인스턴스 반환
+    test = CEngine::Getinst(); // 생성된 인스턴스 반환
+    test = CEngine::Getinst(); // 생성된 인스턴스 반환
+
+    CEngine::Destroy(); 
+
+
     MyRegisterClass(hInstance);
 
     // 애플리케이션 초기화를 수행합니다:
@@ -37,22 +57,28 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
         return FALSE;
     }
 
+    // 단축키 테이블 참조: 단축키가 눌렸는지 확인하는 작업 
     HACCEL hAccelTable = LoadAccelerators(hInstance, MAKEINTRESOURCE(IDC_CLIENT));
+    MSG msg; // *PMSG를 MSG라고 typedef로 재정의한 상태 
 
-    MSG msg;
-
-    // 기본 메시지 루프입니다:
-    while (GetMessage(&msg, nullptr, 0, 0))
+    //*Getmassage 함수는 메세지 큐에 WM_QUIT 메세지가 들어있으면 false를 반환 
+    //*Getmassage 함수는 메세지 큐에서 가져온 메세지가 WM_QUIT가 아니면 언제나 true를 반환
+ 
+    while (GetMessage(&msg, nullptr, 0, 0)) // G.M은 메세지 큐에서 메세지를 꺼내오는 함수 
     {
+        // 단축키 조합이 눌렸는지 확인
         if (!TranslateAccelerator(msg.hwnd, hAccelTable, &msg))
         {
-            TranslateMessage(&msg);
-            DispatchMessage(&msg);
+            TranslateMessage(&msg); // 꺼내온 메세지를 처리하는 함수 1
+            DispatchMessage(&msg); // 꺼내온 메세지를 처리하는 함수 2 
         }
     }
 
     return (int) msg.wParam;
 }
+// 돌아가는 원리: 메세지 큐에 이벤트가 차곡차곡 쌓이고, 
+// while문으로 꺼내며 하나씩 MGS에 저장
+// 단축키가 눌렸다면 Translate & Dispatch 함수로 꺼내온 메세지를 처리 
 
 
 
@@ -60,8 +86,10 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 //  함수: MyRegisterClass()
 //
 //  용도: 창 클래스를 등록합니다.
-//
-ATOM MyRegisterClass(HINSTANCE hInstance)
+//  윈도우 속성값을 정하는 함수 
+// 
+
+ATOM MyRegisterClass(HINSTANCE hInstance) // 윈도우 정보 저장 (만들 재료) 
 {
     WNDCLASSEXW wcex;
 
@@ -75,9 +103,12 @@ ATOM MyRegisterClass(HINSTANCE hInstance)
     wcex.hIcon          = LoadIcon(hInstance, MAKEINTRESOURCE(IDI_CLIENT));
     wcex.hCursor        = LoadCursor(nullptr, IDC_ARROW);
     wcex.hbrBackground  = (HBRUSH)(COLOR_WINDOW+1);
-    wcex.lpszMenuName   = MAKEINTRESOURCEW(IDC_CLIENT);
-    wcex.lpszClassName  = szWindowClass;
+    wcex.lpszMenuName   = nullptr;  // 리소스뷰에서 string 테이블로 호출하므로 필요x
+    wcex.lpszClassName = L"findwindow";//szWindowClass; 윈도우 찾는 키값 
     wcex.hIconSm        = LoadIcon(wcex.hInstance, MAKEINTRESOURCE(IDI_SMALL));
+
+    // szWindowClass == 윈도우 찾는 키값. 전역변수로 wchar형 배열로 있었으나 지움. 
+    // 대신 문자열을 키값으로 넣어줄거.
 
     return RegisterClassExW(&wcex);
 }
@@ -85,41 +116,49 @@ ATOM MyRegisterClass(HINSTANCE hInstance)
 //
 //   함수: InitInstance(HINSTANCE, int)
 //
-//   용도: 인스턴스 핸들을 저장하고 주 창을 만듭니다.
+//   용도: 인스턴스 핸들(hwnd)을 저장하고 주 창(게임 윈도우)을 만듭니다.
 //
 //   주석:
 //
-//        이 함수를 통해 인스턴스 핸들을 전역 변수에 저장하고
-//        주 프로그램 창을 만든 다음 표시합니다.
+//        이 함수를 통해 인스턴스 핸들(hwnd)을 "전역 변수"에 저장하고 
+//        주 프로그램 창(게임 윈도우)을 만든 다음 표시합니다.
 //
 BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 {
-   hInst = hInstance; // 인스턴스 핸들을 전역 변수에 저장합니다.
+   hInst = hInstance; // 위에서 만든 인스턴스 핸들을 전역 변수에 저장합니다.
+                      // HINSTANCE   hInst = 0; 여기 MyRegisterClass의 내용물. 
 
-   HWND hWnd = CreateWindowW(szWindowClass, szTitle, WS_OVERLAPPEDWINDOW,
-      CW_USEDEFAULT, 0, CW_USEDEFAULT, 0, nullptr, nullptr, hInstance, nullptr);
+   // 윈도우 생성 후 핸들(만들어진 윈도우의 리모컨or아이디)
+   // 이걸 전역변수에 저장할 거임. (전역변수에 쓰므로 자료형 생략. 하늘색=지역변수)
+   main_hWnd = CreateWindowW(L"findwindow", L"Baba Is You", WS_OVERLAPPEDWINDOW, 
+      CW_USEDEFAULT, 0, CW_USEDEFAULT, 0, nullptr, nullptr, hInstance, nullptr);  
 
-   if (!hWnd)
+   if (!main_hWnd)  // 메인 핸들이 없을 시 (윈도우 생성 실패) 
    {
       return FALSE;
    }
 
-   ShowWindow(hWnd, nCmdShow);
-   UpdateWindow(hWnd);
+   // return FALSE가 아닐 시 쭉쭉 진행 
+
+   ShowWindow(main_hWnd, nCmdShow); // main_hWnd 에 메인의 모든 정보가 들어있는 키보드
+   UpdateWindow(main_hWnd);  
 
    return TRUE;
 }
 
-//
-//  함수: WndProc(HWND, UINT, WPARAM, LPARAM)
-//
-//  용도: 주 창의 메시지를 처리합니다.
-//
+// WM_LBUTTOMDOWN - 연습용 case에 들어가는 전역변수 
+bool g_bLBtnClicked = false; 
+
+//  함수: WndProc(HWND, UINT, WPARAM, LPARAM) 여기가 메인. 
+//              윈도우ID, 무슨 메세지? , 부가적인 것들 
+//  용도: 메인 윈도우의 메세지 큐를 처리한다. 
+//  원리: UNIT으로 들어오는 메세지를 switch 문을 따라 처리함 
+// 
 //  WM_COMMAND  - 애플리케이션 메뉴를 처리합니다.
-//  WM_PAINT    - 주 창을 그립니다.
+//  WM_PAINT    - 주 창을 그립니다. 이걸 자주 쓸거임 
 //  WM_DESTROY  - 종료 메시지를 게시하고 반환합니다.
-//
-//
+//  아래의 하나 더 추가해봄
+
 LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
     switch (message)
@@ -141,11 +180,21 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
             }
         }
         break;
+     // 우클릭 감지 시, 우클릭 감지 체크용 전역변수를 변경. 
+    case WM_LBUTTONDOWN:
+        g_bLBtnClicked = true; // 클릭되었으니 true로 변경  
+        break; 
     case WM_PAINT:
         {
             PAINTSTRUCT ps;
             HDC hdc = BeginPaint(hWnd, &ps);
-            // TODO: 여기에 hdc를 사용하는 그리기 코드를 추가합니다...
+            // TODO: 여기에 hdc를 사용하는 그리기 코드를 추가합니다.
+ 
+            if (g_bLBtnClicked) // if(g_bLBtnClicked==true) 좌클릭 인식 시 
+            {
+                Rectangle(hdc, 100, 100, 210, 210); 
+            }
+
             EndPaint(hWnd, &ps);
         }
         break;
