@@ -19,7 +19,7 @@ private:
 
 	HDC		m_dc; // 이미지를 그릴때 필요한 핸들(브헨) 쟤도 DC
 
-	CLevel* m_Level; 
+	CLevel* m_Level; // 레벨 생성 후 엔진이 들고있을 포인터.
 
 public:
 	// (여기 입력 값)을 메헨1,윈도 해상도2 변수에 넣어줌. 초기화. 

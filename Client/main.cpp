@@ -41,17 +41,31 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     HACCEL hAccelTable = LoadAccelerators(hInstance, MAKEINTRESOURCE(IDC_CLIENT));
     MSG msg; // *PMSG를 MSG라고 typedef로 재정의한 상태 
 
-    //*Getmassage 함수는 메세지 큐에 WM_QUIT 메세지가 들어있으면 false를 반환 
-    //*Getmassage 함수는 메세지 큐에서 가져온 메세지가 WM_QUIT가 아니면 언제나 true를 반환
  
-    while (GetMessage(&msg, nullptr, 0, 0)) // G.M은 메세지 큐에서 메세지를 꺼내오는 함수 
+    while (true)
     {
-        // 단축키 조합이 눌렸는지 확인
-        if (!TranslateAccelerator(msg.hwnd, hAccelTable, &msg))
+        // 겟 메세지 대신 픽 메세지 사용
+        if (PeekMessage(&msg, nullptr, 0, 0, PM_REMOVE))
         {
-            TranslateMessage(&msg); // 꺼내온 메세지를 처리하는 함수 1
-            DispatchMessage(&msg); // 꺼내온 메세지를 처리하는 함수 2 
+            if (WM_QUIT == msg.message)
+            {
+                break;
+            }
+
+            // 단축키 조합이 눌렸는지 확인
+            if (!TranslateAccelerator(msg.hwnd, hAccelTable, &msg))
+            {
+                TranslateMessage(&msg); // 꺼내온 메세지를 처리하는 함수 1
+                DispatchMessage(&msg); // 꺼내온 메세지를 처리하는 함수 2 
+            }
         }
+
+        // 메세지가 없었다. (엔진에tick을 돌리기 시작)
+        else
+        {
+            CEngine::GetInst()->tick(); 
+        }
+
     }
 
     return (int) msg.wParam;
@@ -160,27 +174,21 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
             }
         }
         break;
-     // 우클릭 감지 시, 우클릭 감지 체크용 전역변수를 변경. 
-    case WM_LBUTTONDOWN:
-        g_bLBtnClicked = true; // 클릭되었으니 true로 변경  
-        break; 
+
     case WM_PAINT:
         {
             PAINTSTRUCT ps;
             HDC hdc = BeginPaint(hWnd, &ps);
             // TODO: 여기에 hdc를 사용하는 그리기 코드를 추가합니다.
- 
-            if (g_bLBtnClicked) // if(g_bLBtnClicked==true) 좌클릭 인식 시 
-            {
-                Rectangle(hdc, 100, 100, 210, 210); 
-            }
 
             EndPaint(hWnd, &ps);
         }
         break;
+
     case WM_DESTROY:
         PostQuitMessage(0);
         break;
+
     default:
         return DefWindowProc(hWnd, message, wParam, lParam);
     }

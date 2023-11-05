@@ -2,15 +2,14 @@
 #include "CEngine.h"
 
 #include "CLevel.h"
-// 헤더 하나 더 
+#include "CPlayer.h"
 
 CEngine::CEngine() 
 	:m_hWnd(nullptr)
 	, m_ptResolution{}
-	, m_dc(nullptr)
 	, m_Level(nullptr)
+	, m_dc(nullptr)
 {
-
 }
 
 CEngine::~CEngine()
@@ -36,12 +35,19 @@ void CEngine::init(HWND _hWnd, POINT _ptResolution)
 	// DC 생성 (브러시로 쓸 핸들)
 	m_dc = GetDC(m_hWnd); // 메헨을 넣으면, DC를 생성해주는 함수
 
-	// Level 생성(미완)
+	// Level 생성 + pl(obj) 생성 후 add
 	m_Level = new CLevel; // 우선은 1개만 
 
 	// 1.  obj 인 플레이어 생성
+	CPlayer* pPlayer = new CPlayer; 
+
 	// 2.  플레이어 Pos, Scale 세팅 
+	pPlayer->SetPos(POINT{ 500, 500 });
+	pPlayer->SetScale(POINT{ 50, 50 }); 
+
 	// 3.  만든 m_Level에 1.을 AddObject해줌 
+	// AddObject는 레벨.h에 있음. 
+	m_Level->AddObject(pPlayer); 
 }
 
 void CEngine::tick() 
