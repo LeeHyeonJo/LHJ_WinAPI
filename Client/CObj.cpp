@@ -11,10 +11,10 @@ CObj::~CObj()
 
 void CObj::render(HDC _dc)
 {
-	// 여기서 그려짐 
+	// 여기서 그려짐: 
 	Rectangle(_dc
-		, m_Pos.x - m_Scale.x / 2
-		, m_Pos.y - m_Scale.y / 2
-		, m_Pos.x + m_Scale.x / 2 
-		, m_Pos.y + m_Scale.y / 2); 
+		, int(m_Pos.x - m_Scale.x / 2)
+		, int(m_Pos.y - m_Scale.y / 2)
+		, int(m_Pos.x + m_Scale.x / 2)
+		, int(m_Pos.y + m_Scale.y / 2));
 }

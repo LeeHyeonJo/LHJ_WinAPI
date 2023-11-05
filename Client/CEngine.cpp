@@ -1,8 +1,12 @@
 #include "pch.h" 
 #include "CEngine.h"
 
+// Manager
+#include "CTimeMgr.h"
+
 #include "CLevel.h"
 #include "CPlayer.h"
+
 
 CEngine::CEngine() 
 	:m_hWnd(nullptr)
@@ -32,8 +36,16 @@ void CEngine::init(HWND _hWnd, POINT _ptResolution)
 	SetWindowPos(m_hWnd, nullptr, 1930, 10, m_ptResolution.x, m_ptResolution.y, 0); 
 	ShowWindow(m_hWnd, true); 
 
+	// DC : Device Context
+	// pen : Black 
+	// brush : White
+	// Bitmap(그림 그릴 곳) : 핸들에 해당하는 윈도우 비트맵
 	// DC 생성 (브러시로 쓸 핸들)
 	m_dc = GetDC(m_hWnd); // 메헨을 넣으면, DC를 생성해주는 함수
+
+	// Manager 초기화 
+	CTimeMgr::GetInst()->init(); 
+
 
 	// Level 생성 + pl(obj) 생성 후 add
 	m_Level = new CLevel; // 우선은 1개만 
@@ -42,8 +54,8 @@ void CEngine::init(HWND _hWnd, POINT _ptResolution)
 	CPlayer* pPlayer = new CPlayer; 
 
 	// 2.  플레이어 Pos, Scale 세팅 
-	pPlayer->SetPos(POINT{ 500, 500 });
-	pPlayer->SetScale(POINT{ 50, 50 }); 
+	pPlayer->SetPos(Vec2{ 500, 500 });
+	pPlayer->SetScale(Vec2{ 50, 50 });
 
 	// 3.  만든 m_Level에 1.을 AddObject해줌 
 	// AddObject는 레벨.h에 있음. 
@@ -52,6 +64,10 @@ void CEngine::init(HWND _hWnd, POINT _ptResolution)
 
 void CEngine::tick() 
 {
+	// TimeMgr 
+	// 이게 있어야DT를 구함 
+	CTimeMgr::GetInst()->tick(); 
+
 	// 레벨에서 틱. 렌더 돌리라고 명령~
 	m_Level->tick();
 	m_Level->render(m_dc);

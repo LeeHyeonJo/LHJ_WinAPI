@@ -140,9 +140,6 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
    return TRUE;
 }
 
-// WM_LBUTTOMDOWN - 연습용 case에 들어가는 전역변수 
-bool g_bLBtnClicked = false; 
-
 //  함수: WndProc(HWND, UINT, WPARAM, LPARAM) 여기가 메인. 
 //              윈도우ID, 무슨 메세지? , 부가적인 것들 
 //  용도: 메인 윈도우의 메세지 큐를 처리한다. 
