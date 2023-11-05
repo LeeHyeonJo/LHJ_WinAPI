@@ -136,6 +136,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="CEngine.h" />
+    <ClInclude Include="CLevel.h" />
     <ClInclude Include="Client.h" />
     <ClInclude Include="CObj.h" />
     <ClInclude Include="define.h" />
@@ -147,6 +148,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CEngine.cpp" />
+    <ClCompile Include="CLevel.cpp" />
     <ClCompile Include="CObj.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="pch.cpp" />
