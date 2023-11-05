@@ -5,7 +5,7 @@ class CObj; // vector<CObj*>  때문에
 
 class CLevel
 {
-	private:
+private:
 	vector<CObj*> 	m_vecObjects; // 오브젝트들을 CObj*,벡터로 보관
 
 public:

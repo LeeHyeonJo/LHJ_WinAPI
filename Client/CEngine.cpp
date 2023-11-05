@@ -1,20 +1,26 @@
 #include "pch.h" 
 #include "CEngine.h"
 
+#include "CLevel.h"
+// 헤더 하나 더 
+
 CEngine::CEngine() 
 	:m_hWnd(nullptr)
 	, m_ptResolution{}
 	, m_dc(nullptr)
+	, m_Level(nullptr)
 {
-	// 나중에 레벨도 추가됨
+
 }
 
 CEngine::~CEngine()
 {
-	// DC 해제 이건 포인터이기 때문 
+	// DC 해제. WinAPI함수 사용
 	ReleaseDC(m_hWnd, m_dc); 
 
-	// 레벨 해제는 이따가 (소멸자니까0
+	// 레벨 해제. 레벨 포인터를 delete하는 원리로 구현 
+	if (m_Level != nullptr)
+		delete m_Level; 
 }
 
 void CEngine::init(HWND _hWnd, POINT _ptResolution)
@@ -30,12 +36,17 @@ void CEngine::init(HWND _hWnd, POINT _ptResolution)
 	// DC 생성 (브러시로 쓸 핸들)
 	m_dc = GetDC(m_hWnd); // 메헨을 넣으면, DC를 생성해주는 함수
 
-	// 레벨은 내일부터 
+	// Level 생성(미완)
+	m_Level = new CLevel; // 우선은 1개만 
 
-
+	// 1.  obj 인 플레이어 생성
+	// 2.  플레이어 Pos, Scale 세팅 
+	// 3.  만든 m_Level에 1.을 AddObject해줌 
 }
 
 void CEngine::tick() 
 {
 	// 레벨에서 틱. 렌더 돌리라고 명령~
+	m_Level->tick();
+	m_Level->render(m_dc);
 }

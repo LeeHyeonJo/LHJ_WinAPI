@@ -55,11 +55,14 @@
     <ClInclude Include="pch.h">
       <Filter>Default</Filter>
     </ClInclude>
-    <ClInclude Include="CObj.h">
-      <Filter>Game\04. Object\Player</Filter>
-    </ClInclude>
     <ClInclude Include="CLevel.h">
       <Filter>Game\05. Level</Filter>
+    </ClInclude>
+    <ClInclude Include="CObj.h">
+      <Filter>Game\04. Object</Filter>
+    </ClInclude>
+    <ClInclude Include="CPlayer.h">
+      <Filter>Game\04. Object\Player</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -85,11 +88,14 @@
     <ClCompile Include="pch.cpp">
       <Filter>Default</Filter>
     </ClCompile>
-    <ClCompile Include="CObj.cpp">
-      <Filter>Game\04. Object\Player</Filter>
-    </ClCompile>
     <ClCompile Include="CLevel.cpp">
       <Filter>Game\05. Level</Filter>
+    </ClCompile>
+    <ClCompile Include="CObj.cpp">
+      <Filter>Game\04. Object</Filter>
+    </ClCompile>
+    <ClCompile Include="CPlayer.cpp">
+      <Filter>Game\04. Object\Player</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
