@@ -20,7 +20,7 @@
 							 	 ~ClassType();
 
 // 눌린 키 체크 (하단 사용 용)
-#define KEY_CHECK(Key, State) CKeyMgr::GetInst()->GetKeyState(Key) == State  
+#define KEY_CHECK(Key, State) CKeyMgr::GetInst()->GetKeyState(Key) == State
 
 // 키 상태 4가지 저장 (이중 매크로)
 #define KEY_TAP(Key) KEY_CHECK(Key, TAP)

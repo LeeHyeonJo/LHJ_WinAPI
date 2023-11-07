@@ -3,23 +3,29 @@
 
 // Manager
 #include "CTimeMgr.h"
-
-#include "CLevel.h"
-#include "CPlayer.h"
+#include "CKeyMgr.h"
+#include "CLevelMgr.h"
 
 
 CEngine::CEngine() 
-	:m_hWnd(nullptr)
+	: m_hWnd(nullptr)
 	, m_ptResolution{}
 	, m_Level(nullptr)
-	, m_dc(nullptr)
+	, m_DC(nullptr)
+	, m_SubBitMap(nullptr)
 {
 }
 
 CEngine::~CEngine()
 {
-	// DC 해제. WinAPI함수 사용
-	ReleaseDC(m_hWnd, m_dc); 
+	// 메인 브러시 핸들 & 메인 윈도우 핸들 해제
+	ReleaseDC(m_hWnd, m_DC); 
+
+	// 서브 화면 지우기 
+	DeleteObject(m_SubBitMap);
+
+	// 서브 핸들 지우기
+	DeleteDC(m_SubDC);
 
 	// 레벨 해제. 레벨 포인터를 delete하는 원리로 구현 
 	if (m_Level != nullptr)
@@ -41,33 +47,33 @@ void CEngine::init(HWND _hWnd, POINT _ptResolution)
 	// brush : White
 	// Bitmap(그림 그릴 곳) : 핸들에 해당하는 윈도우 비트맵
 	// DC 생성 (브러시로 쓸 핸들)
-	m_dc = GetDC(m_hWnd); // 메헨을 넣으면, DC를 생성해주는 함수
+	m_DC = GetDC(m_hWnd); // 메헨을 넣으면, DC를 생성해주는 함수
+
+
+	// 서브 화면(추가 비트맵) 생성 & 서브 DC를 여기에 연결
+	m_SubBitMap = CreateCompatibleBitmap(m_DC, m_ptResolution.x, m_ptResolution.y); 
+	m_SubDC = CreateCompatibleDC(m_DC); 
+
+	// m_SubDC 가 m_SubBitmap 을 목적지로 지정하고, 원래 목적지로 지정하고 있던 BitMap 이 반환값으로 나오는데, 
+	// 이걸 바로 DeleteObject 함수에 전달시켜서 삭제요청한다.
+	DeleteObject((HBITMAP)SelectObject(m_SubDC, m_SubBitMap));
+
 
 	// Manager 초기화 
 	CTimeMgr::GetInst()->init(); 
-
-
-	// Level 생성 + pl(obj) 생성 후 add
-	m_Level = new CLevel; // 우선은 1개만 
-
-	// 1.  obj 인 플레이어 생성
-	CPlayer* pPlayer = new CPlayer; 
-
-	// 2.  플레이어 Pos, Scale 세팅 
-	pPlayer->SetPos(Vec2{ 500, 500 });
-	pPlayer->SetScale(Vec2{ 50, 50 });
-
-	// 3.  만든 m_Level에 1.을 AddObject해줌 
-	// AddObject는 레벨.h에 있음. 
-	m_Level->AddObject(pPlayer); 
+	CKeyMgr::GetInst()->init();
+	CLevelMgr::GetInst()->init(); // 플레이어 객체 1개 new & add
 }
 
 void CEngine::tick() 
 {
+	// 메니저 업데이트 
 	// TimeMgr: 이게 있어야 DT를 구함 (이걸 빼서 이동을 안한 것)
+	// KryMgr: 이게 있어야 key 벡터 돌면서 검사 
 	CTimeMgr::GetInst()->tick(); 
+	CKeyMgr::GetInst()->tick(); 
 
-	// 레벨에서 틱. 렌더 돌리라고 명령~
-	m_Level->tick();
-	m_Level->render(m_dc);
+	// 레벨 매니저
+	CLevelMgr::GetInst()->tick(); // 렙 매니저 업데이트
+	CLevelMgr::GetInst()->render(m_SubDC); // bitbit해서 그리기
 }

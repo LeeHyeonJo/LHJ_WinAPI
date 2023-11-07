@@ -2,6 +2,7 @@
 #include "CPlayer.h"
 
 #include "CTimeMgr.h" // DT 적용
+#include "CKeyMgr.h" // 이중 매크로에서 CKeyMgr에 접근하므로 헤더 필요
 
 CPlayer::CPlayer()
 	: m_Speed(500.f) // 속도 초기화. Cpl의 m_Speed에 세팅
@@ -18,7 +19,7 @@ void CPlayer::tick(float _DT) // 키 입력에 따라 이동
 
 	// 상하좌우 키 입력이 눌리면 움직인다. 
 	// TAP,Pressed,Release,None은 define에서 매크로로 정의
-	if (KEY_PRESSED(LEFT))
+	if (KEY_PRESSED(LEFT)) 
 	{
 		vPos.x -= m_Speed * _DT;
 	}

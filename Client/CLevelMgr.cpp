@@ -1,0 +1,54 @@
+#include "pch.h"
+#include "CLevelMgr.h"
+
+#include "CEngine.h"
+
+#include "CLevel.h"
+#include "CPlayer.h"
+
+
+CLevelMgr::CLevelMgr()
+{
+
+}
+
+CLevelMgr::~CLevelMgr()
+{
+
+}
+
+
+void CLevelMgr::init() // 일단 플레이어 객체 1개를 만들라고 하는 상태
+{
+	// Level 생성
+	m_pCurLevel = new CLevel;
+
+	// PL객체 pPl 생성
+	CPlayer* pPlayer = new CPlayer;
+
+	// pPL의 위치 & 크기 세팅
+	pPlayer->SetPos(Vec2(500.f, 500.f));
+	pPlayer->SetScale(Vec2(50.f, 50.f));
+
+	// pPL을 현재 레벨에 넣어줌
+	m_pCurLevel->AddObject(pPlayer);
+}
+
+void CLevelMgr::tick()
+{
+	m_pCurLevel->tick(); // 현재 레벨에 있는 obj 벡터에 tick 돌려 명령
+}
+
+void CLevelMgr::render(HDC _dc)
+{
+	// Level Render
+	// 화면 깨끗하게 지우기 
+	POINT ptResolution = CEngine::GetInst()->GetResolution();
+	Rectangle(_dc, -1, -1, ptResolution.x + 1, ptResolution.y + 1);
+
+	// 현재 레벨을 그리기 (렌더)
+	m_pCurLevel->render(_dc);
+
+	// m_SubDC -> m_DC 로 비트맵 복사
+	BitBlt(CEngine::GetInst()->GetMainDC(), 0, 0, ptResolution.x, ptResolution.y, _dc, 0, 0, SRCCOPY);
+}

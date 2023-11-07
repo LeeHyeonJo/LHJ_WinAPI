@@ -13,17 +13,26 @@ class CEngine
 	SINGLETON(CEngine); 
 
 private:
-	HWND	m_hWnd;			// 메인 윈도우 핸들(메헨) 얘도 DC
+	HWND	m_hWnd;			// 메인 윈도우 핸들(메윈헨) 얘도 DC
 	POINT	m_ptResolution;	// 윈도우 해상도 
 	// ㄴ 관리자(엔진)이 관리할거임 
 
-	HDC		m_dc; // 이미지를 그릴때 필요한 핸들(브헨) 쟤도 DC
+	HDC		m_DC; // 메인 브러시 핸들(메브헨) 쟤도 DC
+	HDC		m_SubDC; // 서브 브러시 핸들(섭브핸).
+	// 특: 생성 시 임의의 비트맵 1개 보유
+	HBITMAP	m_SubBitMap; // 섭핸에 연결해줄 서브 화면(섭맵)
+
 
 	CLevel* m_Level; // 레벨 생성 후 엔진이 들고있을 포인터.
 
 public:
-	// (여기 입력 값)을 메헨1,윈도 해상도2 변수에 넣어줌. 초기화. 
+	HWND GetMainWind() { return m_hWnd; } // 윈도우 메헨HWND 얻는 함수
+	HDC GetMainDC() { return m_DC; } // 브러시 브헨DC 얻는 함수
+	POINT GetResolution() { return m_ptResolution; } // 윈도우 해상도 얻는 함수
+
+public:
 	void init(HWND _hWnd, POINT m_ptResolution);
+	// (여기 입력 값)을 메헨1,윈도 해상도2 변수에 넣어줌. 초기화. 
 	void tick(); // 레벨에 tick과 render 돌려줌 
 };
 
