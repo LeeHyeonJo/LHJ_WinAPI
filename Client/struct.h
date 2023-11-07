@@ -23,3 +23,11 @@ public:
 		: x((float)_x), y((float)_y)
 	{}
 };
+
+// 키 상태 저장하는 구조체
+struct FKeyData
+{
+	KEY			eKey;
+	KEY_STATE	eState;
+	bool		bPressed;
+};

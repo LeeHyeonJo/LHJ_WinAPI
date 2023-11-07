@@ -11,7 +11,7 @@ private:
 	LARGE_INTEGER	m_PrevCount; // 이전 
 	LARGE_INTEGER	m_CurCount; // 현재
 
-	float			m_DeltaTime; // 델타타임
+	float			m_DeltaTime; // 델타타임 어디서 초기화하고있는거지
 
 public:
 	float GetDeltaTime() { return m_DeltaTime; }

@@ -70,6 +70,9 @@
     <ClInclude Include="CTimeMgr.h">
       <Filter>Game\03. Manager</Filter>
     </ClInclude>
+    <ClInclude Include="CKeyMgr.h">
+      <Filter>Game\03. Manager</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Client.rc">
@@ -104,6 +107,9 @@
       <Filter>Game\04. Object\Player</Filter>
     </ClCompile>
     <ClCompile Include="CTimeMgr.cpp">
+      <Filter>Game\03. Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="CKeyMgr.cpp">
       <Filter>Game\03. Manager</Filter>
     </ClCompile>
   </ItemGroup>

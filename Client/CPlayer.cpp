@@ -14,25 +14,26 @@ CPlayer::~CPlayer()
 
 void CPlayer::tick(float _DT) // 키 입력에 따라 이동 
 {
-	Vec2 vPos = GetPos(); // Cpl에서 세팅된 m_Speed 가져옴
+	Vec2 vPos = GetPos(); // CPl에서 세팅된 멤변 m_Speed 가져옴
 
-	// 키입력이 발생하면 움직인다. 
-	if (GetAsyncKeyState(VK_LEFT) & 0x8001)
+	// 상하좌우 키 입력이 눌리면 움직인다. 
+	// TAP,Pressed,Release,None은 define에서 매크로로 정의
+	if (KEY_PRESSED(LEFT))
 	{
 		vPos.x -= m_Speed * _DT;
 	}
 
-	if (GetAsyncKeyState(VK_RIGHT) & 0x8001) 
+	if (KEY_PRESSED(RIGHT))
 	{
 		vPos.x += m_Speed * _DT;
 	}
 
-	if (GetAsyncKeyState(VK_UP) & 0x8001) 
+	if (KEY_PRESSED(UP))
 	{
 		vPos.y -= m_Speed * _DT;
 	}
 
-	if (GetAsyncKeyState(VK_DOWN) & 0x8001) 
+	if (KEY_PRESSED(DOWN))
 	{
 		vPos.y += m_Speed * _DT;
 	}

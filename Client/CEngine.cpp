@@ -64,8 +64,7 @@ void CEngine::init(HWND _hWnd, POINT _ptResolution)
 
 void CEngine::tick() 
 {
-	// TimeMgr 
-	// 이게 있어야DT를 구함 
+	// TimeMgr: 이게 있어야 DT를 구함 (이걸 빼서 이동을 안한 것)
 	CTimeMgr::GetInst()->tick(); 
 
 	// 레벨에서 틱. 렌더 돌리라고 명령~
