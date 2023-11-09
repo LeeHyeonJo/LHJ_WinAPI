@@ -4,8 +4,12 @@
 #include "CEngine.h"
 
 #include "CLevel.h"
-#include "CPlayer.h"
 
+// 레벨에서 생성되어야 하므로 여기에 추가 
+#include "CPlayer.h"
+#include "CMonster.h"
+#include "CProjectile.h"
+#include "CGuided.h"
 
 CLevelMgr::CLevelMgr()
 {
@@ -32,6 +36,20 @@ void CLevelMgr::init() // 일단 플레이어 객체 1개를 만들라고 하는 상태
 
 	// pPL을 현재 레벨에 넣어줌
 	m_pCurLevel->AddObject(pPlayer);
+
+	// 몬스터 객체 pMon 초기화
+	CMonster* pMonster = nullptr;
+
+	// pMon에 몬스터 생성
+	pMonster = new CMonster;
+
+	// pMon에 위치 & 크기 세팅
+	pMonster->SetPos(Vec2(1200.f, 500.f));
+	pMonster->SetScale(Vec2(100.f, 100.f));
+
+	// pMon을 현재 레벨에 넣어줌 
+	m_pCurLevel->AddObject(pMonster);
+
 }
 
 void CLevelMgr::tick()

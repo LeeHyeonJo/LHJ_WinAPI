@@ -4,7 +4,7 @@
 class CObj
 {
 private:
-	Vec2   m_Pos; // 포지션: 위치 값 정보
+	Vec2    m_Pos; // 포지션: 위치 값 정보
 	Vec2	m_Scale; // 포지션: 크기 값 정보
 
 public:

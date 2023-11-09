@@ -22,14 +22,20 @@
 // 눌린 키 체크 (하단 사용 용)
 #define KEY_CHECK(Key, State) CKeyMgr::GetInst()->GetKeyState(Key) == State
 
+// DT 매크로화 
+#define DT	CTimeMgr::GetInst()->GetDeltaTime()
+
 // 키 상태 4가지 저장 (이중 매크로)
 #define KEY_TAP(Key) KEY_CHECK(Key, TAP)
 #define KEY_PRESSED(Key) KEY_CHECK(Key, PRESSED)
 #define KEY_RELEASED(Key) KEY_CHECK(Key, RELEASED)
 #define KEY_NONE(Key) KEY_CHECK(Key, NONE)
 
+// 삼각함수 계산용
+#define PI	3.14159265348979f
 
-
+// 게임 폴더(bin & content) 경로 
+#define GAME_FOLDER Baba
 
 
 // Key Value

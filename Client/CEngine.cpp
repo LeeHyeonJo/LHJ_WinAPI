@@ -5,7 +5,9 @@
 #include "CTimeMgr.h"
 #include "CKeyMgr.h"
 #include "CLevelMgr.h"
+#include "CPathMgr.h"
 
+#include "CLevel.h" 
 
 CEngine::CEngine() 
 	: m_hWnd(nullptr)
@@ -39,7 +41,7 @@ void CEngine::init(HWND _hWnd, POINT _ptResolution)
 	m_ptResolution = _ptResolution; 
 
 	// 해상도 변경(m_ptResolution 값으로)
-	SetWindowPos(m_hWnd, nullptr, 1930, 10, m_ptResolution.x, m_ptResolution.y, 0); 
+	SetWindowPos(m_hWnd, nullptr, 10, 10, m_ptResolution.x, m_ptResolution.y, 0); 
 	ShowWindow(m_hWnd, true); 
 
 	// DC : Device Context
@@ -62,6 +64,7 @@ void CEngine::init(HWND _hWnd, POINT _ptResolution)
 	// Manager 초기화 
 	CTimeMgr::GetInst()->init(); 
 	CKeyMgr::GetInst()->init();
+	CPathMgr::init(); 
 	CLevelMgr::GetInst()->init(); // 플레이어 객체 1개 new & add
 }
 
@@ -70,7 +73,7 @@ void CEngine::tick()
 	// 메니저 업데이트 
 	// TimeMgr: 이게 있어야 DT를 구함 (이걸 빼서 이동을 안한 것)
 	// KryMgr: 이게 있어야 key 벡터 돌면서 검사 
-	CTimeMgr::GetInst()->tick(); 
+	CTimeMgr::GetInst()->tick();  
 	CKeyMgr::GetInst()->tick(); 
 
 	// 레벨 매니저

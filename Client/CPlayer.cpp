@@ -4,13 +4,34 @@
 #include "CTimeMgr.h" // DT 적용
 #include "CKeyMgr.h" // 이중 매크로에서 CKeyMgr에 접근하므로 헤더 필요
 
+#include "CLevelMgr.h" 
+#include "CLevel.h"
+
+#include "CProjectile.h"  // 투사제
+#include "CGuided.h" // 그거,, 추적 
+
+#include "CPathMgr.h" // 이미지 경로 찾기 위해 
+#include "CEngine.h" // 이미지 로드 과정에서 엔진에서 메인DC가져옴 
+
 CPlayer::CPlayer()
 	: m_Speed(500.f) // 속도 초기화. Cpl의 m_Speed에 세팅
+	, m_Image(nullptr)
 {
+	// 이미지가 존재하는 상대경로(constent 폴더로부터)
+	wstring strPath = CPathMgr::GetContentPath();
+	strPath += L"texture\\fighter.bmp";
+
+	// 플레이어가 사용할 이미지 비트맵 로딩
+	m_Image = (HBITMAP)LoadImage(nullptr, strPath.c_str(), IMAGE_BITMAP, 0, 0, LR_LOADFROMFILE | LR_CREATEDIBSECTION);
+	m_ImageDC = CreateCompatibleDC(CEngine::GetInst()->GetMainDC());
+	DeleteObject(SelectObject(m_ImageDC, m_Image));
+	GetObject(m_Image, sizeof(BITMAP), &m_BitmapInfo);
 }
 
 CPlayer::~CPlayer()
 {
+	DeleteObject(m_Image);
+	DeleteDC(m_ImageDC);
 }
 
 void CPlayer::tick(float _DT) // 키 입력에 따라 이동 
@@ -39,10 +60,32 @@ void CPlayer::tick(float _DT) // 키 입력에 따라 이동
 		vPos.y += m_Speed * _DT;
 	}
 
+	if (KEY_TAP(SPACE)) // 스페이스 바 눌렀을때 발사체 발사 
+	{
+		// 현재 레벨을 레벨 매니저에서 받아온 후 세팅
+		CLevel* pCurLevel = CLevelMgr::GetInst()->GetCurLevel();
+
+		for (int i = 0; i < 3; ++i)
+		{
+			CGuided* pProjectile = new CGuided;
+
+			Vec2 ProjectilePos = GetPos();
+			ProjectilePos.y -= GetScale().y / 2.f;
+
+			pProjectile->SetSpeed(500.f);
+			pProjectile->SetAngle(PI / 2.f);
+			pProjectile->SetPos(ProjectilePos);
+			pProjectile->SetScale(Vec2(25.f, 25.f));
+			pProjectile->SetDir(Vec2(0.f, -1.f));
+			pCurLevel->AddObject(pProjectile);
+		}
+	}
+
+
 	SetPos(vPos); // 키 입력 결과 바뀐 m_Speed 값을 재 세팅
 }
 
-void CPlayer::render(HDC _dc) // Cpl에서 그림 그리기 
+void CPlayer::render(HDC _dc) // Cpl에서 그림or이미지 띄우기
 {
 	Vec2 vPos = GetPos(); 
 	Vec2 vScale = GetScale();
@@ -56,12 +99,13 @@ void CPlayer::render(HDC _dc) // Cpl에서 그림 그리기
 	HBRUSH hBlueBrush = CreateSolidBrush(RGB(20, 20, 255));
 	HBRUSH hPrevBrush = (HBRUSH)SelectObject(_dc, hBlueBrush);
 
-	//Rectangle 함수는 int만 받으므로 형변환을 함
-	Rectangle(_dc
-		, int(vPos.x - vScale.x / 2)
-		, int(vPos.y - vScale.y / 2)
-		, int(vPos.x + vScale.x / 2)
-		, int(vPos.y + vScale.y / 2));
+	// 렌더된 이미지로 비행기 띄움. 
+	BitBlt(_dc, vPos.x - m_BitmapInfo.bmWidth / 2.f
+		, vPos.y - m_BitmapInfo.bmHeight / 2.f
+		, m_BitmapInfo.bmWidth
+		, m_BitmapInfo.bmHeight
+		, m_ImageDC
+		, 0, 0, SRCCOPY);
 
 	// 되돌리고 사용했던 펜, 브러쉬를 삭제한다.
 	SelectObject(_dc, hPrevPen);

@@ -10,7 +10,6 @@ private:
 	LARGE_INTEGER	m_Frequency; // 빈도
 	LARGE_INTEGER	m_PrevCount; // 이전 
 	LARGE_INTEGER	m_CurCount; // 현재
-
 	float			m_DeltaTime; // 델타타임 
 
 	UINT			m_iCall;

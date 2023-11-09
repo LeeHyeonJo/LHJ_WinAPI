@@ -24,6 +24,7 @@
     <ProjectGuid>{807d30db-9d8e-47de-8027-16569169d0f7}</ProjectGuid>
     <RootNamespace>Client</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+    <ProjectName>GAME</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -70,6 +71,20 @@
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <OutDir>..\Babaisyou\bin</OutDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <OutDir>..\Babaisyou\bin</OutDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <OutDir>$(SolutionDir)Baba\bin\</OutDir>
+    <TargetName>BabaIsYou_debug</TargetName>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <OutDir>$(SolutionDir)Baba\bin\</OutDir>
+    <TargetName>BabaIsYou_game</TargetName>
+  </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
@@ -136,16 +151,22 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="CEngine.h" />
+    <ClInclude Include="CEntity.h" />
+    <ClInclude Include="CGuided.h" />
     <ClInclude Include="CKeyMgr.h" />
+    <ClInclude Include="CLayer.h" />
     <ClInclude Include="CLevel.h" />
     <ClInclude Include="CLevelMgr.h" />
     <ClInclude Include="Client.h" />
+    <ClInclude Include="CMonster.h" />
     <ClInclude Include="CObj.h" />
+    <ClInclude Include="CPathMgr.h" />
     <ClInclude Include="CPlayer.h" />
     <ClInclude Include="CProjectile.h" />
     <ClInclude Include="CTimeMgr.h" />
     <ClInclude Include="define.h" />
     <ClInclude Include="framework.h" />
+    <ClInclude Include="func.h" />
     <ClInclude Include="global.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="Resource.h" />
@@ -159,7 +180,10 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="CEntity.cpp" />
+    <ClCompile Include="CGuided.cpp" />
     <ClCompile Include="CKeyMgr.cpp" />
+    <ClCompile Include="CLayer.cpp" />
     <ClCompile Include="CLevel.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
@@ -167,7 +191,9 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="CLevelMgr.cpp" />
+    <ClCompile Include="CMonster.cpp" />
     <ClCompile Include="CObj.cpp" />
+    <ClCompile Include="CPathMgr.cpp" />
     <ClCompile Include="CPlayer.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
@@ -176,6 +202,7 @@
     </ClCompile>
     <ClCompile Include="CProjectile.cpp" />
     <ClCompile Include="CTimeMgr.cpp" />
+    <ClCompile Include="func.cpp" />
     <ClCompile Include="main.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>

@@ -9,6 +9,9 @@ private:
 	class CLevel* m_pCurLevel; // 현재 레벨
 
 public:
+	CLevel* GetCurLevel() { return m_pCurLevel; } // 현재 레벨 리턴
+
+public:
 	void init();
 	void tick();
 	void render(HDC _dc);
