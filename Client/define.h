@@ -110,6 +110,7 @@ enum KEY
 	KEY_END,
 };
 
+// 키 눌린 상태 정의 
 enum KEY_STATE
 {
 	NONE,
@@ -118,7 +119,7 @@ enum KEY_STATE
 	RELEASED,
 };
 
-// 레이어 상태 저장
+// 레이어 상태 정의
 enum LAYER
 {
 	DEFAULT,

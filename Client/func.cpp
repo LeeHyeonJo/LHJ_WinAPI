@@ -1,6 +1,8 @@
 #include "pch.h"
 #include "func.h"
 
+// 물리(회전) 관련 
+
 Vec2 Rotate(Vec2 _vDir, float _angle)
 {
 	_vDir.Normalize();

@@ -1,7 +1,7 @@
 #pragma once
 #include "CProjectile.h"
 
-// 목적: 유도탄~ 
+// 목적: 유도탄 구조 좀 더 깔끔하게 코드 정리 
 
 class CMonster;
 
@@ -9,7 +9,7 @@ class CGuided :
     public CProjectile
 {
 private:
-    CMonster* m_Target;
+    CMonster*   m_Target;
 
     float       m_fMass;
     Vec2        m_vAccel;

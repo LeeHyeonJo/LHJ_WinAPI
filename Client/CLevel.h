@@ -28,11 +28,11 @@ public:
 	void GetObjects(vector<T*>& _Out);
 
 	// 레벨이 소유하고 있는 특정 레이어의 오브젝트 목록을 반환한다.
+	// 수정되면 안되므로 const, 복사비용을 줄이기 위해 원본을 가져옴 = &
 	const vector<CObj*>& GetObjects(LAYER _LayerType)
 	{ 
 		return m_Layer[_LayerType]->m_vecObjects;
 	}
-	// 수정되면 안되므로 const, 원본을 그대로 가져오므로 &
 
 
 public:

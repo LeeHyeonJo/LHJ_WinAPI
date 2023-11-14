@@ -9,11 +9,10 @@ public:
 	float x;
 	float y;
 
+
 public:
 	float Distance(Vec2 _Other)
 	{
-		//sprt -> sprtf로 함수 수정 (수정 가능해야 하므로)
-		//pow ->  pewf로 함수 수정
 		return sqrtf(powf(x - _Other.x, 2) + powf(y - _Other.y, 2));
 	}
 
@@ -22,7 +21,7 @@ public:
 		return sqrtf(x * x + y * y);
 	}
 
-	Vec2& Normalize() 
+	Vec2& Normalize()
 	{
 		float f = Length();
 		x /= f;
@@ -31,7 +30,6 @@ public:
 		return *this;
 	}
 
-	// Vec2 구조체에서 사용할 연산자 
 	Vec2 operator + (Vec2 _Other)
 	{
 		return Vec2(x + _Other.x, y + _Other.y);
@@ -56,7 +54,7 @@ public:
 
 
 
-	Vec2 operator - (Vec2 _Other) 
+	Vec2 operator - (Vec2 _Other)
 	{
 		return Vec2(x - _Other.x, y - _Other.y);
 	}
@@ -86,6 +84,7 @@ public:
 	{
 		return Vec2(x / _f, y / _f);
 	}
+
 
 public:
 	Vec2()
