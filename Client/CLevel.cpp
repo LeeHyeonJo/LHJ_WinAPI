@@ -2,34 +2,48 @@
 #include "CLevel.h"
 
 #include "CTimeMgr.h"
+#include "CLayer.h" // 레이어가 obj 벡터 배열 관리 
 #include "CObj.h" // vector<CObj*> 	m_vecObjects; 때문에 
 
-CLevel::CLevel()
+CLevel::CLevel() // for 문 돌면서 레이어 7개 생성 
 {
-}
-
-CLevel::~CLevel()  // vector<CObj*> m_vecObjects 지움
-{
-	for (size_t i = 0; i < m_vecObjects.size(); ++i)
+	for (UINT i = 0; i < LAYER::END; ++i)
 	{
-		delete m_vecObjects[i];
+		m_Layer[i] = new CLayer;
 	}
 }
 
-void CLevel::tick() // m_vecObjects를 for로 돌며 tick()
+CLevel::~CLevel()  // 레이어 삭제 
+{
+	for (UINT i = 0; i < LAYER::END; ++i)
+	{
+		if (nullptr != m_Layer[i])
+			delete m_Layer[i];
+	}
+}
+
+void CLevel::tick() // m_Layer를 for로 돌며 tick() 
+// 원하는 obj를 찾기 위해 해당하는 레이어만 돌면 됨 
 {
 	// Lv이 DT 받으므로 모든 Obj(+파생)이 기본 DT를 들고 있게 됨
 	// DT는 매크로로 빠짐 
-	for (size_t i = 0; i < m_vecObjects.size(); ++i)
+	for (UINT i = 0; i < LAYER::END; ++i)
 	{
-		m_vecObjects[i]->tick(DT); // 이 tick()은 PL쪽 
+		m_Layer[i]->tick(DT);
 	}
 }
 
-void CLevel::render(HDC _dc) // m_vecObjects를 for로 돌며 render()
+void CLevel::render(HDC _dc) // m_Layer를 for로 돌며 render()
 {
-	for (size_t i = 0; i < m_vecObjects.size(); ++i)
+	for (UINT i = 0; i < LAYER::END; ++i)
 	{
-		m_vecObjects[i]->render(_dc); // 이 render()는 PL쪽
+		m_Layer[i]->render(_dc);
 	}
+}
+
+// 레벨에서 명령하는 addobj는 해당하는 레이어에,obj를 넣으라는 명령
+// 즉, 해당 레이어에 - 레이어::addobj(obj) 를 호출하는 방식 
+void CLevel::AddObject(LAYER _LayerType, CObj* _Object)
+{
+	m_Layer[_LayerType]->AddObject(_Object);
 }

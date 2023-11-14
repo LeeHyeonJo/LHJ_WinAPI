@@ -1,43 +1,58 @@
 #pragma once
-// 용도: Obj 관리용. 
 
-class CObj; // vector<CObj*>  때문에
+#include "CEntity.h"
+
+#include "CLayer.h"
+// 목적: obj 를 관리하는 레이어를 관리(레이어 포인터)
+
+class CObj; // obj를 관리하므로 
 
 class CLevel
+	: public CEntity // 매니저 제외하고 각 개체에 전부 개별 ID
 {
 private:
-	vector<CObj*> 	m_vecObjects; // 오브젝트들을 CObj*,벡터로 보관
-	// 투사체와 플레이어가 여기로 보관됨 현재는 
+	CLayer* m_Layer[LAYER::END];
 
 public:
 	void tick();
 	void render(HDC _dc);
 
-public: 
-	void AddObject(CObj* _Object)
-	{
-		m_vecObjects.push_back(_Object);
-	}
+public:
+	// 레벨에서 AdOb = 어떤 레이어에, 들어갈 obj
+	// 인자 추가 = (어떤 레이어에, 들어갈 obj) 
+	void AddObject(LAYER _LayerType, CObj* _Object);
 
+
+	// 레벨이 소유하고 있는 모든 레이어를 순회하면서 T 타입에 해당하는 객체를 찾아서 결과(_Out) 벡터에 담아준다.
 	template<typename T>
 	void GetObjects(vector<T*>& _Out);
+
+	// 레벨이 소유하고 있는 특정 레이어의 오브젝트 목록을 반환한다.
+	const vector<CObj*>& GetObjects(LAYER _LayerType)
+	{ 
+		return m_Layer[_LayerType]->m_vecObjects;
+	}
+	// 수정되면 안되므로 const, 원본을 그대로 가져오므로 &
+
 
 public:
 	CLevel();
 	~CLevel();
 };
 
-// 특정 타입 객체 찾는 기능을 템플릿화 ( getobj() ) 
 template<typename T>
 inline void CLevel::GetObjects(vector<T*>& _Out)
 {
-	for (size_t i = 0; i < m_vecObjects.size(); ++i)
+	for (UINT j = 0; j < LAYER::END; ++j)
 	{
-		T* pObj = dynamic_cast<T*>(m_vecObjects[i]);
-
-		if (nullptr != pObj)
+		for (size_t i = 0; i < m_Layer[j]->m_vecObjects.size(); ++i)
 		{
-			_Out.push_back(pObj);
+			T* pObj = dynamic_cast<T*>(m_Layer[j]->m_vecObjects[i]);
+
+			if (nullptr != pObj)
+			{
+				_Out.push_back(pObj);
+			}
 		}
 	}
 }

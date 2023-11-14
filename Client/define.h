@@ -117,3 +117,17 @@ enum KEY_STATE
 	PRESSED,
 	RELEASED,
 };
+
+// 레이어 상태 저장
+enum LAYER
+{
+	DEFAULT,
+	TILE,
+	PLAYER,
+	MONSTER,
+	PLAYER_PJ,
+	MONSTER_PJ,
+	WORLD_STATIC,
+
+	END,
+};
