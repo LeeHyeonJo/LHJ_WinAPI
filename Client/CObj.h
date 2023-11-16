@@ -1,5 +1,7 @@
 #pragma once
 #include "CEntity.h"
+#include "CTaskMgr.h"
+// #include "CCamera.h"
 // CObj = 모든 오브젝트의 부모 class. 객체를 만들 곳이 아님
 
 class CObj

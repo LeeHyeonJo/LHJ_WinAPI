@@ -20,20 +20,23 @@
     <Filter Include="Game\03. Manager">
       <UniqueIdentifier>{6485a4dd-848c-4ca9-ab03-7745a842b6d4}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Game\04. Object">
+    <Filter Include="Game\06. Component">
+      <UniqueIdentifier>{b61a3b3e-0765-459e-8da2-bbe9c363e816}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\05. Object">
       <UniqueIdentifier>{55254366-030e-4128-a6e5-4705624e7bcf}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Game\05. Level">
-      <UniqueIdentifier>{c076c3be-aa6c-4f53-8d94-0b3c2a878477}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Game\04. Object\Player">
+    <Filter Include="Game\05. Object\Player">
       <UniqueIdentifier>{2c948e3f-8579-4c3c-9006-c7468f16d6dd}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Game\04. Object\Projectile">
+    <Filter Include="Game\05. Object\Projectile">
       <UniqueIdentifier>{c43c5aab-f1dc-4cb5-9c82-9e6ebfd675ed}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Game\04. Object\Monster">
+    <Filter Include="Game\05. Object\Monster">
       <UniqueIdentifier>{28706095-3d7e-43db-a3b6-94da6a6307fa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\04. Level">
+      <UniqueIdentifier>{c076c3be-aa6c-4f53-8d94-0b3c2a878477}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -62,13 +65,13 @@
       <Filter>Default</Filter>
     </ClInclude>
     <ClInclude Include="CLevel.h">
-      <Filter>Game\05. Level</Filter>
+      <Filter>Game\04. Level</Filter>
     </ClInclude>
     <ClInclude Include="CObj.h">
-      <Filter>Game\04. Object</Filter>
+      <Filter>Game\05. Object</Filter>
     </ClInclude>
     <ClInclude Include="CPlayer.h">
-      <Filter>Game\04. Object\Player</Filter>
+      <Filter>Game\05. Object\Player</Filter>
     </ClInclude>
     <ClInclude Include="struct.h">
       <Filter>Game\01. Header</Filter>
@@ -83,16 +86,16 @@
       <Filter>Game\03. Manager</Filter>
     </ClInclude>
     <ClInclude Include="CProjectile.h">
-      <Filter>Game\04. Object\Projectile</Filter>
+      <Filter>Game\05. Object\Projectile</Filter>
     </ClInclude>
     <ClInclude Include="CMonster.h">
-      <Filter>Game\04. Object\Monster</Filter>
+      <Filter>Game\05. Object\Monster</Filter>
     </ClInclude>
     <ClInclude Include="CGuided.h">
-      <Filter>Game\04. Object\Projectile</Filter>
+      <Filter>Game\05. Object\Projectile</Filter>
     </ClInclude>
     <ClInclude Include="CLayer.h">
-      <Filter>Game\05. Level</Filter>
+      <Filter>Game\04. Level</Filter>
     </ClInclude>
     <ClInclude Include="CEntity.h" />
     <ClInclude Include="CPathMgr.h">
@@ -100,6 +103,12 @@
     </ClInclude>
     <ClInclude Include="func.h">
       <Filter>Game\01. Header</Filter>
+    </ClInclude>
+    <ClInclude Include="CTaskMgr.h">
+      <Filter>Game\03. Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="CCamera.h">
+      <Filter>Game\03. Manager</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -126,13 +135,13 @@
       <Filter>Default</Filter>
     </ClCompile>
     <ClCompile Include="CLevel.cpp">
-      <Filter>Game\05. Level</Filter>
+      <Filter>Game\04. Level</Filter>
     </ClCompile>
     <ClCompile Include="CObj.cpp">
-      <Filter>Game\04. Object</Filter>
+      <Filter>Game\05. Object</Filter>
     </ClCompile>
     <ClCompile Include="CPlayer.cpp">
-      <Filter>Game\04. Object\Player</Filter>
+      <Filter>Game\05. Object\Player</Filter>
     </ClCompile>
     <ClCompile Include="CTimeMgr.cpp">
       <Filter>Game\03. Manager</Filter>
@@ -144,16 +153,16 @@
       <Filter>Game\03. Manager</Filter>
     </ClCompile>
     <ClCompile Include="CProjectile.cpp">
-      <Filter>Game\04. Object\Projectile</Filter>
+      <Filter>Game\05. Object\Projectile</Filter>
     </ClCompile>
     <ClCompile Include="CMonster.cpp">
-      <Filter>Game\04. Object\Monster</Filter>
+      <Filter>Game\05. Object\Monster</Filter>
     </ClCompile>
     <ClCompile Include="CGuided.cpp">
-      <Filter>Game\04. Object\Projectile</Filter>
+      <Filter>Game\05. Object\Projectile</Filter>
     </ClCompile>
     <ClCompile Include="CLayer.cpp">
-      <Filter>Game\05. Level</Filter>
+      <Filter>Game\04. Level</Filter>
     </ClCompile>
     <ClCompile Include="CEntity.cpp" />
     <ClCompile Include="CPathMgr.cpp">
@@ -161,6 +170,12 @@
     </ClCompile>
     <ClCompile Include="func.cpp">
       <Filter>Game\01. Header</Filter>
+    </ClCompile>
+    <ClCompile Include="CTaskMgr.cpp">
+      <Filter>Game\03. Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="CCamera.cpp">
+      <Filter>Game\03. Manager</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

@@ -119,3 +119,11 @@ struct FMonInfo
 	float Int;
 	float Speed;
 };
+
+// 태스크 매니저에서 사용 
+struct FTask
+{
+	TASK_TYPE Type; // 할 일 - 생성 지움 레벨변환
+	UINT_PTR  Param_1; // 
+	UINT_PTR  Param_2; // 
+};

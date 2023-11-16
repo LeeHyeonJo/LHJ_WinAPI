@@ -17,27 +17,31 @@ public:
 	void tick();
 	void render(HDC _dc);
 
-public:
-	// 레벨에서 AdOb = 어떤 레이어에, 들어갈 obj
-	// 인자 추가 = (어떤 레이어에, 들어갈 obj) 
-	void AddObject(LAYER _LayerType, CObj* _Object);
-
-
-	// 레벨이 소유하고 있는 모든 레이어를 순회하면서 T 타입에 해당하는 객체를 찾아서 결과(_Out) 벡터에 담아준다.
-	template<typename T>
+	// 레벨이 소유하고 있는 모든 레이어를 순회하면서
+	// T 타입에 해당하는 객체를 찾아서 결과(_Out) 벡터에 담아준다.
+	template<typename T> // 템플릿이므로 하단에 구현 
 	void GetObjects(vector<T*>& _Out);
 
 	// 레벨이 소유하고 있는 특정 레이어의 오브젝트 목록을 반환한다.
 	// 수정되면 안되므로 const, 복사비용을 줄이기 위해 원본을 가져옴 = &
 	const vector<CObj*>& GetObjects(LAYER _LayerType)
-	{ 
+	{
 		return m_Layer[_LayerType]->m_vecObjects;
 	}
+
+private:
+	// 레벨에서 AdOb = 어떤 레이어에, 들어갈 obj
+	// 인자 추가 = (어떤 레이어에, 들어갈 obj) 
+	void AddObject(LAYER _LayerType, CObj* _Object);
 
 
 public:
 	CLevel();
 	~CLevel();
+
+	// 추가된 이유: AddObject를 private 화 했기 때문. 
+	friend class CLevelMgr; // 레벨 MGR에서 여기에 접근 
+	friend class CTaskMgr; // 테스크 MGR에서 여기에 접근 
 };
 
 template<typename T>
