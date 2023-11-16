@@ -77,7 +77,7 @@ void CPlayer::tick(float _DT) // 키 입력에 따라 이동
 			pProjectile->SetPos(ProjectilePos);
 			pProjectile->SetScale(Vec2(25.f, 25.f));
 			pProjectile->SetDir(Vec2(0.f, -1.f));
-			pCurLevel->AddObject(pProjectile);
+			pCurLevel->AddObject(PLAYER_PJ, pProjectile);
 		}
 	}
 
@@ -99,13 +99,23 @@ void CPlayer::render(HDC _dc) // Cpl에서 그림or이미지 띄우기
 	HBRUSH hBlueBrush = CreateSolidBrush(RGB(20, 20, 255));
 	HBRUSH hPrevBrush = (HBRUSH)SelectObject(_dc, hBlueBrush);
 
-	// 렌더된 이미지로 비행기 띄움. 
-	BitBlt(_dc, vPos.x - m_BitmapInfo.bmWidth / 2.f
-		, vPos.y - m_BitmapInfo.bmHeight / 2.f
+	// 렌더된 이미지로 비행기 띄움. BitBit()에서 Transparentblt()로 변경
+	/*BitBlt(_dc, (int)vPos.x - m_BitmapInfo.bmWidth / 2
+				, (int)vPos.y - m_BitmapInfo.bmHeight / 2
+				, m_BitmapInfo.bmWidth
+				, m_BitmapInfo.bmHeight
+				, m_ImageDC
+				, 0, 0, SRCCOPY);*/
+
+	TransparentBlt(_dc, (int)vPos.x - m_BitmapInfo.bmWidth / 2
+		, (int)vPos.y - m_BitmapInfo.bmHeight / 2
 		, m_BitmapInfo.bmWidth
 		, m_BitmapInfo.bmHeight
 		, m_ImageDC
-		, 0, 0, SRCCOPY);
+		, 0, 0
+		, m_BitmapInfo.bmWidth
+		, m_BitmapInfo.bmHeight
+		, RGB(255, 0, 255));
 
 	// 되돌리고 사용했던 펜, 브러쉬를 삭제한다.
 	SelectObject(_dc, hPrevPen);

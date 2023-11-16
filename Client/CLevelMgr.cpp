@@ -35,7 +35,7 @@ void CLevelMgr::init() // 일단 플레이어 객체 1개를 만들라고 하는 상태
 	pPlayer->SetScale(Vec2(50.f, 50.f));
 
 	// pPL을 현재 레벨에 넣어줌
-	m_pCurLevel->AddObject(pPlayer);
+	m_pCurLevel->AddObject(PLAYER, pPlayer); 
 
 	// 몬스터 객체 pMon 초기화
 	CMonster* pMonster = nullptr;
@@ -48,7 +48,7 @@ void CLevelMgr::init() // 일단 플레이어 객체 1개를 만들라고 하는 상태
 	pMonster->SetScale(Vec2(100.f, 100.f));
 
 	// pMon을 현재 레벨에 넣어줌 
-	m_pCurLevel->AddObject(pMonster);
+	m_pCurLevel->AddObject(MONSTER, pMonster);
 
 }
 

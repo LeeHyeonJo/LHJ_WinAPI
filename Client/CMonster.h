@@ -10,7 +10,11 @@ private:
 
 
 public:
-    void SetMonsterInfo(const FMonInfo& _Info) { m_Info = _Info; } // 몬스터 info 리턴(구조체 형태)
+    // 몬스터 info 리턴(구조체 형태)
+    void SetMonsterInfo(const FMonInfo& _Info)
+    {
+        m_Info = _Info;
+    } 
 
 public:
     virtual void tick(float _DT) override;

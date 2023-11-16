@@ -120,6 +120,7 @@ enum KEY_STATE
 };
 
 // 레이어 상태 정의
+// PJ는 투사체 
 enum LAYER
 {
 	DEFAULT,

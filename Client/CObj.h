@@ -1,7 +1,9 @@
 #pragma once
+#include "CEntity.h"
 // CObj = 모든 오브젝트의 부모 class. 객체를 만들 곳이 아님
 
 class CObj
+	: public CEntity
 {
 private:
 	Vec2    m_Pos; // 포지션: 위치 값 정보

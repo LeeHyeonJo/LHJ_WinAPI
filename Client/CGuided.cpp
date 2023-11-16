@@ -34,17 +34,25 @@ void CGuided::tick(float _DT)
 	}
 }
 
+// 유도탄 구조 좀 바꿈 
 void CGuided::FindTarget()
 {
 	// 현재 레벨에 있는 오브젝트들 중에서 CMonster 로부터 파생된 객체목록을 받아온다.
-	vector<CMonster*> vecMon;
-	CLevel* pCurLevel = CLevelMgr::GetInst()->GetCurLevel();
-	pCurLevel->GetObjects<CMonster>(vecMon);
+	// vector<CMonster*> vecMon;
+	// CLevel* pCurLevel = CLevelMgr::GetInst()->GetCurLevel();
+	// pCurLevel->GetObjects<CMonster>(vecMon);
 
-	// 몬스터 목록 중, 유도탄과 더 가까운 몬스터를 타겟으로 지정한다.
+	// 1. 현제 레벨 가져오기 & 그 레벨에, 몬스터 레이어에서 obj 가져오고 배치
+	CLevel* pCurLevel = CLevelMgr::GetInst()->GetCurLevel();
+	const vector<CObj*>& vecMon = pCurLevel->GetObjects(LAYER::MONSTER);
+
+	// 2. 몬스터 목록 중, 유도탄과 더 가까운 몬스터를 타겟으로 지정한다.
 	if (vecMon.size() == 1)
 	{
-		m_Target = vecMon[0];
+		m_Target = dynamic_cast<CMonster*>(vecMon[0]);
+
+		// Level 의 Monster Layer 에 Monster 가 아닌 다른 클래스타입의 객체가 들어있었다.
+		assert(m_Target);
 	}
 	else if (vecMon.empty())
 	{
@@ -61,7 +69,10 @@ void CGuided::FindTarget()
 			if (fMax > fDistance)
 			{
 				fMax = fDistance;
-				m_Target = vecMon[i];
+				m_Target = dynamic_cast<CMonster*>(vecMon[i]);
+
+				// Level 의 Monster Layer 에 Monster 가 아닌 다른 클래스타입의 객체가 들어있었다.
+				assert(m_Target);
 			}
 		}
 	}
