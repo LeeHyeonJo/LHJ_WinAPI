@@ -1,7 +1,7 @@
 #pragma once
 #include "CObj.h"
 
-class CProjectile :
+class CProjectile : // πﬂªÁ√º 
     public CObj
 {
 private:
