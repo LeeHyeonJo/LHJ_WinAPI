@@ -18,6 +18,8 @@ CEngine::CEngine()
 	, m_Level(nullptr)
 	, m_DC(nullptr)
 	, m_SubBitMap(nullptr)
+	, m_bDebugRender(true)
+	, m_arrPen{}
 {
 }
 
@@ -35,6 +37,18 @@ CEngine::~CEngine()
 	// 레벨 해제. 레벨 포인터를 delete하는 원리로 구현 
 	if (m_Level != nullptr)
 		delete m_Level; 
+
+	for (UINT i = 0; i < PEN_END; ++i)
+	{
+		DeleteObject(m_arrPen[i]);
+	}
+}
+
+void CEngine::CreateDefaultGDI()
+{
+	m_arrPen[RED_PEN] = CreatePen(PS_SOLID, 1, RGB(255, 20, 20));
+	m_arrPen[GREEN_PEN] = CreatePen(PS_SOLID, 1, RGB(20, 255, 20));
+	m_arrPen[BLUE_PEN] = CreatePen(PS_SOLID, 1, RGB(20, 20, 255));
 }
 
 void CEngine::init(HWND _hWnd, POINT _ptResolution)
@@ -69,6 +83,9 @@ void CEngine::init(HWND _hWnd, POINT _ptResolution)
 	CKeyMgr::GetInst()->init();
 	CPathMgr::init(); 
 	CLevelMgr::GetInst()->init(); // 플레이어 객체 1개 new & add
+
+	// Default GDI Object 생성
+	CreateDefaultGDI();
 }
 
 void CEngine::tick() // 용도; 매니저 업데이트(일해)
@@ -78,6 +95,12 @@ void CEngine::tick() // 용도; 매니저 업데이트(일해)
 	CTimeMgr::GetInst()->tick();  
 	CKeyMgr::GetInst()->tick(); 
 	CCamera::GetInst()->tick();
+
+	if (KEY_TAP(KEY::NUM8)) // 
+	{
+		m_bDebugRender ? m_bDebugRender = false : m_bDebugRender = true;
+	}
+
 
 	// 레벨 매니저
 	CLevelMgr::GetInst()->tick(); // 렙 매니저 업데이트

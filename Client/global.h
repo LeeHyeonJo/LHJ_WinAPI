@@ -5,3 +5,7 @@
 #include "define.h" // 매크로 관련: 현재 싱글톤 매크로만 있음 
 #include "struct.h" // 구조체 모음: 현재는 Vec2만 있음. float, int 2개
 #include "func.h" // 회전 관련 
+
+
+#define DEBUGGGGG
+

@@ -46,7 +46,7 @@ protected: // 컴포넌트 추가하는 함수(템플릿)
 	template<typename T>
 	T* AddComponent()
 	{
-		T* pNewCom = new T;
+		T* pNewCom = new T(this);
 		m_vecComponent.push_back(pNewCom);
 		return pNewCom;
 	}

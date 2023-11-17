@@ -22,6 +22,8 @@ CGuided::~CGuided()
 
 void CGuided::tick(float _DT)
 {
+	Super::tick(_DT); // CObj::tick->veccomponent 돌린다는 뜻 
+
 	if (nullptr == m_Target)
 	{
 		FindTarget();

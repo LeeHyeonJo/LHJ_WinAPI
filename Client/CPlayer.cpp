@@ -23,6 +23,11 @@ CPlayer::CPlayer()
 	wstring strPath = CPathMgr::GetContentPath();
 	strPath += L"texture\\fighter.bmp";
 
+	// **필요한 컴포넌트 추가**
+	m_Collider = AddComponent<CCollider>();
+	m_Collider->SetOffsetPos(Vec2(0.f, 10.f));
+	m_Collider->SetScale(Vec2(40.f, 80.f));
+
 	// 플레이어가 사용할 이미지 비트맵 로딩
 	m_Image = (HBITMAP)LoadImage(nullptr, strPath.c_str(), IMAGE_BITMAP, 0, 0, LR_LOADFROMFILE | LR_CREATEDIBSECTION);
 	m_ImageDC = CreateCompatibleDC(CEngine::GetInst()->GetMainDC());
@@ -97,15 +102,6 @@ void CPlayer::render(HDC _dc) // Cpl에서 그림or이미지 띄우기
 	Vec2 vPos = GetRenderPos(); // 카메라 있게 돌아감 
 	Vec2 vScale = GetScale();
 
-
-	// Black Pen -> Red Pen
-	HPEN hRedPen = CreatePen(PS_SOLID, 1, RGB(255, 20, 20));
-	HPEN hPrevPen = (HPEN)SelectObject(_dc, hRedPen);
-
-	// White Brush -> Blue Brush
-	HBRUSH hBlueBrush = CreateSolidBrush(RGB(20, 20, 255));
-	HBRUSH hPrevBrush = (HBRUSH)SelectObject(_dc, hBlueBrush);
-
 	// 렌더된 이미지로 비행기 띄움. BitBit()에서 Transparentblt()로 변경
 	/*BitBlt(_dc, (int)vPos.x - m_BitmapInfo.bmWidth / 2
 				, (int)vPos.y - m_BitmapInfo.bmHeight / 2
@@ -124,10 +120,5 @@ void CPlayer::render(HDC _dc) // Cpl에서 그림or이미지 띄우기
 		, m_BitmapInfo.bmHeight
 		, RGB(255, 0, 255));
 
-	// 되돌리고 사용했던 펜, 브러쉬를 삭제한다.
-	SelectObject(_dc, hPrevPen);
-	DeleteObject(hRedPen);
-
-	SelectObject(_dc, hPrevBrush);
-	DeleteObject(hBlueBrush);
+	Super::render(_dc); // 플레이어를 그렸으니, 이제 component 를 그려라 
 }

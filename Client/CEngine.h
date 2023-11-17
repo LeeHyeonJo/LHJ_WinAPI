@@ -25,10 +25,20 @@ private:
 
 	CLevel* m_Level; // 레벨 생성 후 엔진이 들고있을 포인터.
 
+	bool	m_bDebugRender;
+
+	HPEN	m_arrPen[PEN_END];
+
 public:
 	HWND GetMainWind() { return m_hWnd; } // 윈도우 메헨HWND 얻는 함수
 	HDC GetMainDC() { return m_DC; } // 브러시 브헨DC 얻는 함수
 	POINT GetResolution() { return m_ptResolution; } // 윈도우 해상도 얻는 함수
+
+	HPEN GetPen(PEN_TYPE _type) { return m_arrPen[_type]; }
+	bool DebugRender() { return m_bDebugRender; }
+
+private:
+	void CreateDefaultGDI();
 
 public:
 	void init(HWND _hWnd, POINT m_ptResolution);

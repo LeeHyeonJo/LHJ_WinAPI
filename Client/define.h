@@ -42,6 +42,13 @@
 #define GENERATED_OBJECT(type) typedef type Super;\
 							   virtual void Abstract() override {}
 
+// 디버그 렌더 기능 추가 
+#define DEBUG_RENDER CEngine::GetInst()->DebugRender()
+
+// 펜,브러시 고르는 함수 
+#define SELECT_PEN(DC, TYPE) FSelectPen tempPenSelect(DC, TYPE)
+#define SELECT_BRUSH(DC, hBrush) FSelectBrush tempBrushSelect(DC, hBrush)
+
 
 // Key Value
 enum KEY
@@ -150,4 +157,14 @@ enum TASK_TYPE
 
 
 	LEVEL_CHANGE,
+};
+
+
+enum PEN_TYPE
+{
+	GREEN_PEN,
+	BLUE_PEN,
+	RED_PEN,
+
+	PEN_END,
 };
