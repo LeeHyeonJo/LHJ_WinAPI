@@ -85,6 +85,12 @@ public:
 		return Vec2(x / _f, y / _f);
 	}
 
+	void operator /= (float _f)
+	{
+		x /= _f;
+		y /= _f;
+	}
+
 
 public:
 	Vec2()
@@ -98,6 +104,11 @@ public:
 
 	Vec2(int _x, int _y)
 		: x((float)_x), y((float)_y)
+	{}
+
+	Vec2(POINT _pt)
+		: x((float)_pt.x)
+		, y((float)_pt.y)
 	{}
 };
 

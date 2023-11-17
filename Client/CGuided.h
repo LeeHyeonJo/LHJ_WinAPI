@@ -2,12 +2,13 @@
 #include "CProjectile.h"
 
 // 목적: 유도탄 구조 좀 더 깔끔하게 코드 정리 
-// 
 class CMonster;
 
 class CGuided :
     public CProjectile
 {
+    GENERATED_OBJECT(CProjectile);
+
 private:
     CMonster*   m_Target;
 

@@ -12,19 +12,11 @@ CProjectile::~CProjectile()
 {
 }
 
-void CProjectile::tick(float _DT)
-{
-	Vec2 vPos = GetPos();
-
-	vPos.x += m_Speed * cosf(m_Angle) * _DT;
-	vPos.y -= m_Speed * sinf(m_Angle) * _DT;
-
-	SetPos(vPos);
-}
 
 void CProjectile::render(HDC _dc)
 {
-	Vec2 vPos = GetPos();
+	// Vec2 vPos = GetPos(); 이건 카메라 없이 
+	Vec2 vPos = GetRenderPos(); // 카메라 적용 
 	Vec2 vScale = GetScale();
 
 	Ellipse(_dc

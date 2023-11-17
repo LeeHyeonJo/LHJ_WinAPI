@@ -11,7 +11,10 @@ private:
 
 
 public:
-	KEY_STATE GetKeyState(KEY _Key) { return m_vecKeyData[_Key].eState; }
+	KEY_STATE GetKeyState(KEY _Key)
+	{
+		return m_vecKeyData[_Key].eState;
+	}
 
 public:
 	void init();

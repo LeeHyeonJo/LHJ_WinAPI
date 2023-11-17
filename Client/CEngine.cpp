@@ -1,11 +1,14 @@
 #include "pch.h" 
 #include "CEngine.h"
 
-// Manager
+// Manager 
+// 원리: 엔진 tick == 매니저들 일해 == 엔진cpp에서 정의 
 #include "CTimeMgr.h"
 #include "CKeyMgr.h"
 #include "CLevelMgr.h"
 #include "CPathMgr.h"
+#include "CTaskMgr.h"
+#include "CCamera.h"
 
 #include "CLevel.h" 
 
@@ -68,15 +71,18 @@ void CEngine::init(HWND _hWnd, POINT _ptResolution)
 	CLevelMgr::GetInst()->init(); // 플레이어 객체 1개 new & add
 }
 
-void CEngine::tick() 
+void CEngine::tick() // 용도; 매니저 업데이트(일해)
 {
-	// 메니저 업데이트 
 	// TimeMgr: 이게 있어야 DT를 구함 (이걸 빼서 이동을 안한 것)
 	// KryMgr: 이게 있어야 key 벡터 돌면서 검사 
 	CTimeMgr::GetInst()->tick();  
 	CKeyMgr::GetInst()->tick(); 
+	CCamera::GetInst()->tick();
 
 	// 레벨 매니저
 	CLevelMgr::GetInst()->tick(); // 렙 매니저 업데이트
 	CLevelMgr::GetInst()->render(m_SubDC); // bitbit해서 그리기
+
+	// Task Execute
+	CTaskMgr::GetInst()->tick(); // 텍스트 매니저 
 }

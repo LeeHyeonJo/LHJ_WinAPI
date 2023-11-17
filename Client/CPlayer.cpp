@@ -13,11 +13,13 @@
 #include "CPathMgr.h" // 이미지 경로 찾기 위해 
 #include "CEngine.h" // 이미지 로드 과정에서 엔진에서 메인DC가져옴 
 
+#include "CCollider.h" 
+
 CPlayer::CPlayer()
 	: m_Speed(500.f) // 속도 초기화. Cpl의 m_Speed에 세팅
 	, m_Image(nullptr)
 {
-	// 이미지가 존재하는 상대경로(constent 폴더로부터)
+	// 이미지가 존재하는 상대경로(contents 폴더로부터)
 	wstring strPath = CPathMgr::GetContentPath();
 	strPath += L"texture\\fighter.bmp";
 
@@ -36,26 +38,28 @@ CPlayer::~CPlayer()
 
 void CPlayer::tick(float _DT) // 키 입력에 따라 이동 
 {
+	Super::tick(_DT);
+
 	Vec2 vPos = GetPos(); // CPl에서 세팅된 멤변 m_Speed 가져옴
 
-	// 상하좌우 키 입력이 눌리면 움직인다. 
+	// WASD키 입력이 눌리면 움직인다. 
 	// TAP,Pressed,Release,None은 define에서 매크로로 정의
-	if (KEY_PRESSED(LEFT)) 
+	if (KEY_PRESSED(A))
 	{
 		vPos.x -= m_Speed * _DT;
 	}
 
-	if (KEY_PRESSED(RIGHT))
+	if (KEY_PRESSED(D))
 	{
 		vPos.x += m_Speed * _DT;
 	}
 
-	if (KEY_PRESSED(UP))
+	if (KEY_PRESSED(W))
 	{
 		vPos.y -= m_Speed * _DT;
 	}
 
-	if (KEY_PRESSED(DOWN))
+	if (KEY_PRESSED(S))
 	{
 		vPos.y += m_Speed * _DT;
 	}
@@ -77,17 +81,20 @@ void CPlayer::tick(float _DT) // 키 입력에 따라 이동
 			pProjectile->SetPos(ProjectilePos);
 			pProjectile->SetScale(Vec2(25.f, 25.f));
 			pProjectile->SetDir(Vec2(0.f, -1.f));
-			pCurLevel->AddObject(PLAYER_PJ, pProjectile);
+
+			// pCurLevel->AddObject(PLAYER_PJ, pProjectile);
+			// pl에게 투사체 추가하는걸 태스크 매니저에게 맡김
+			CTaskMgr::GetInst()->AddTask(FTask{ CREATE_OBJECT, PLAYER_PJ, (UINT_PTR)pProjectile });
 		}
 	}
-
 
 	SetPos(vPos); // 키 입력 결과 바뀐 m_Speed 값을 재 세팅
 }
 
 void CPlayer::render(HDC _dc) // Cpl에서 그림or이미지 띄우기
 {
-	Vec2 vPos = GetPos(); 
+	// Vec2 vPos = GetPos(); 카메라 없이 
+	Vec2 vPos = GetRenderPos(); // 카메라 있게 돌아감 
 	Vec2 vScale = GetScale();
 
 

@@ -1,8 +1,11 @@
 #pragma once
+// CObj = 모든 오브젝트의 부모 class. 객체를 만들 곳이 아님
+
 #include "CEntity.h"
 #include "CTaskMgr.h"
-// #include "CCamera.h"
-// CObj = 모든 오브젝트의 부모 class. 객체를 만들 곳이 아님
+#include "CCamera.h"
+
+class CComponent;
 
 class CObj
 	: public CEntity
@@ -10,28 +13,55 @@ class CObj
 private:
 	Vec2    m_Pos; // 포지션: 위치 값 정보
 	Vec2	m_Scale; // 포지션: 크기 값 정보
+	vector<CComponent*>	m_vecComponent; // 컴포넌트 달아줌 
 
 public:
-	Vec2 GetPos() { return m_Pos; }
-	Vec2 GetScale() { return m_Scale; }
-	// Get() 시리즈~ 위의 변수 받아오는 용도
+	Vec2 GetPos()
+	{
+		return m_Pos;
+	}
 
-	void SetPos(Vec2 _Pos) { m_Pos = _Pos; }
-	void SetScale(Vec2 _Scale) { m_Scale = _Scale; }
+	Vec2 GetRenderPos()
+	{
+		return CCamera::GetInst()->GetRenderPos(m_Pos);
+	}
+
+	Vec2 GetScale()
+	{
+		return m_Scale;
+	}
+
+	void SetPos(Vec2 _Pos)
+	{
+		m_Pos = _Pos;
+	}
+
+	void SetScale(Vec2 _Scale)
+	{
+		m_Scale = _Scale; 
+	}
 	// Set() 시리즈~ 위의 변수에 (매.변) 값 세팅하는 용도
 
-public:
-	// 매 프레임 마다 오브젝트가 할 일(tick이 계속 돈다는 뜻)
-	virtual void tick(float _DT) = 0;
-	// 순수 가상함수 & 추상 클래스
-	// 부모에서 구현X, 자식에서 반드시 구현(오버라이드) & =0 필수 
-	// 자식마다 tick을 다르게 사용할 수 있음
+protected: // 컴포넌트 추가하는 함수(템플릿)
+	template<typename T>
+	T* AddComponent()
+	{
+		T* pNewCom = new T;
+		m_vecComponent.push_back(pNewCom);
+		return pNewCom;
+	}
 
-	// 매 프레임마다 화면에 오브젝트를 그리는 함수
-	// pl이 다른 render를 쓸 수 있도록 virtual을 걸어줌 
+public:
+
+	virtual void tick(float _DT); // 역할: 파생클래스에서 할 일 용
+
+	// fianl 상속받은 자식 클래스에서 재정의(override) 할 수 없음
+	virtual void finaltick(float _DT) final; // 컴포넌트 일하라고 (컴포넌트에서 구현)
 	virtual void render(HDC _dc);
-	// 이건 구현해둬서 순수 가상함수가 아님. 따라서 자식이 구현하지 않으면
-	// obj의 render()가 호출됨. 
+
+private:
+	virtual void Abstract() = 0;
+	// 추상 클래스를 유지하기 위해 순수 가상함수 하나 만들어둠 
 
 public:
 	CObj();

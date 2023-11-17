@@ -5,6 +5,7 @@
 class CMonster :
     public CObj
 {
+    GENERATED_OBJECT(CObj);
 private:
     FMonInfo    m_Info; // struct에 몬스터 info 구조체 있음 
 

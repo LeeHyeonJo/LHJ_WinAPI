@@ -38,6 +38,18 @@
     <Filter Include="Game\04. Level">
       <UniqueIdentifier>{c076c3be-aa6c-4f53-8d94-0b3c2a878477}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Game\06. Component\AI">
+      <UniqueIdentifier>{53a10d83-58cd-4894-819f-6883ca61f554}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\06. Component\Animator">
+      <UniqueIdentifier>{cdf1c68f-a056-4c25-a728-7af31f2a5755}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\06. Component\CCollider">
+      <UniqueIdentifier>{c990b625-e059-4e39-97cc-fa5c63b6d0dd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\06. Component\Movement">
+      <UniqueIdentifier>{1406d92d-ab7d-4d7f-be21-04ad959ef36b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Client.h">
@@ -110,6 +122,12 @@
     <ClInclude Include="CCamera.h">
       <Filter>Game\03. Manager</Filter>
     </ClInclude>
+    <ClInclude Include="CComponent.h">
+      <Filter>Game\06. Component</Filter>
+    </ClInclude>
+    <ClInclude Include="CCollider.h">
+      <Filter>Game\06. Component\CCollider</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Client.rc">
@@ -176,6 +194,12 @@
     </ClCompile>
     <ClCompile Include="CCamera.cpp">
       <Filter>Game\03. Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="CComponent.cpp">
+      <Filter>Game\06. Component</Filter>
+    </ClCompile>
+    <ClCompile Include="CCollider.cpp">
+      <Filter>Game\06. Component\CCollider</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

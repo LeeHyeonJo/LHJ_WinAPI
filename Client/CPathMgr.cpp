@@ -13,7 +13,7 @@ void CPathMgr::init()
 
 	size_t Len = wcslen(g_szContent); // 배열 길이 구함 
 
-	for (int i = Len - 1; i >= 0; --i) // 역으로 돌면서 \ 나올때까지 체크
+	for (size_t i = Len - 1; i >= 0; --i) // 역으로 돌면서 \ 나올때까지 체크
 	{
 		if ('\\' == g_szContent[i])
 		{

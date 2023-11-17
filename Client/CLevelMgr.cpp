@@ -2,6 +2,7 @@
 #include "CLevelMgr.h"
 
 #include "CEngine.h"
+#include "CCamera.h"
 
 #include "CLevel.h"
 
@@ -18,7 +19,8 @@ CLevelMgr::CLevelMgr()
 
 CLevelMgr::~CLevelMgr()
 {
-
+	if (nullptr != m_pCurLevel)
+		delete m_pCurLevel;
 }
 
 
@@ -49,6 +51,11 @@ void CLevelMgr::init() // 일단 플레이어 객체 1개를 만들라고 하는 상태
 
 	// pMon을 현재 레벨에 넣어줌 
 	m_pCurLevel->AddObject(MONSTER, pMonster);
+
+	// 카메라 설정 (바바이즈유는 카메라 안쓰면 됨) 
+	Vec2 vLookAt = CEngine::GetInst()->GetResolution();
+	vLookAt /= 2.f;
+	CCamera::GetInst()->SetLookAt(vLookAt);
 
 }
 

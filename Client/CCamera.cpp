@@ -16,6 +16,7 @@ CCamera::~CCamera()
 
 void CCamera::tick()
 {
+	// !!카메라!! 
 	// 방향키로 카메라가 바라보고 있는 위치를 변경
 	if (KEY_PRESSED(KEY::LEFT))
 	{
@@ -36,7 +37,6 @@ void CCamera::tick()
 	{
 		m_vLookAt.y += 200.f * DT;
 	}
-
 
 
 	// 화면 해상도의 중심위치를 알아낸다.

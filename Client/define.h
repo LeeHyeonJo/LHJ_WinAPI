@@ -38,6 +38,11 @@
 #define GAME_FOLDER Baba
 
 
+// 추상클래스 용 가상함수 * type 슈퍼 
+#define GENERATED_OBJECT(type) typedef type Super;\
+							   virtual void Abstract() override {}
+
+
 // Key Value
 enum KEY
 {

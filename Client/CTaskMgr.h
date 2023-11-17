@@ -3,7 +3,7 @@
 // 목적: 할 일은 enum class 로 정의 
 class CTaskMgr
 {
-	SINGLETON(CTaskMgr);
+	SINGLETON(CTaskMgr); 
 
 private:
 	vector<FTask>	m_vecTask;
